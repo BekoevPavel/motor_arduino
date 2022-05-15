@@ -3,12 +3,13 @@
 
 #include <Arduino.h>
 #include "encoder.hpp"
-class DI;
+#include "converter.hpp"
+
 class MotorController
 {
 public:
     MotorController(Encoder *enc);
-    
+
     // func
 public:
     void tick();
@@ -38,7 +39,8 @@ private:
 
     bool _startInjection = false;
     bool _startSpark = false;
+   
+    Converter converter;
 
-    DI *di;
 };
 #endif
