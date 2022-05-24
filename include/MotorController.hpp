@@ -8,7 +8,7 @@
 class MotorController
 {
 public:
-    MotorController(Encoder *enc);
+    MotorController(Encoder *enc, int pinInjection, int pinSpark);
 
     // func
 public:
@@ -39,8 +39,9 @@ private:
 
     bool _startInjection = false;
     bool _startSpark = false;
-   
-    Converter converter;
 
+    int _pinWorkInjection, _pinWorkSpark;
+
+    Converter converter;
 };
 #endif

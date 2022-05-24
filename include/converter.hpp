@@ -18,18 +18,12 @@ public:
 
         uint8_t *bytesArray = _toByte_Array(input);
 
-        for (int i = 0; i < 16; i++)
-        {
-            //Serial.print(String(bytesArray[i]) + ".");
-        }
-
         uint8_t *result = _byteToUnt_array(bytesArray);
 
         return result;
     }
 
 private:
-    
     uint8_t *_toByte_Array(uint16_t input)
 
     {
@@ -67,14 +61,14 @@ private:
         {
             lastArray[i] = bytes[i + 8];
         }
-        //Serial.println("");
-        // first cut print
+        // Serial.println("");
+        //  first cut print
         for (int i = 0; i < 8; i++)
         {
             // Serial.print(String(firstArray[i]) + ".");
         }
-        //Serial.println("");
-        // last cut print
+        // Serial.println("");
+        //  last cut print
         for (int i = 0; i < 8; i++)
         {
             // Serial.print(String(lastArray[i]) + ".");
@@ -93,7 +87,12 @@ private:
             auto res = firstArray[abs(i - 7)] * pow(2, i);
             resultFirst = resultFirst + res;
         }
-        static uint8_t result[3] = {228, resultFirst, resultLast};
+
+        uint8_t *result = new uint8_t[3];
+        result[0] = 228;
+        result[1] = resultFirst;
+        result[2] = resultLast;
+
         return result;
     }
 };

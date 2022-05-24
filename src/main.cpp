@@ -11,9 +11,9 @@ unsigned long int timeOut = 0;
 
 void initDI()
 {
-
+  // 1(5) - искра , 3(7) - Впрыск
   DI::enc = new Encoder(4, 5, 6, 7);
-  DI::motorController = new MotorController(DI::enc);
+  DI::motorController = new MotorController(DI::enc, 22, 23);
   DI::uiProg = new ConnectController();
 }
 
@@ -32,18 +32,8 @@ void setup()
   // DDRC = B11111111;
   // PORTC = B11111111;
 
-  // unsigned long int ff = 547655 * 0.0001;
-  Converter conv;
-  uint16_t input = 1321;
-  auto res = conv.toUInt8_Array(input);
-  Serial.println("start:");
-  for (int i = 0; i < 3; i++)
-  {
-    Serial.print(String(res[i]) + ".");
-  }
-  // Serial.println("first: " + String(res[1]) + " last: " + String(res[2]));
-  // // uint8_t data[2] = res;
-  // di->uiProg->send(res, 3);
+  DI::motorController->setDelayInjectoin(2000);
+  DI::motorController->setDelaySpark(1000);
 }
 
 void loop()
@@ -65,5 +55,5 @@ void loop()
   //   timeOut = millis();
   // }
 
-  DI::uiProg->listen();
+  // DI::uiProg->listen();
 }
