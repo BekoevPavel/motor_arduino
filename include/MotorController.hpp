@@ -4,7 +4,8 @@
 #include <Arduino.h>
 #include "encoder.hpp"
 #include "converter.hpp"
-
+#include "injection.hpp"
+#include "spark.hpp"
 class MotorController
 {
 public:
@@ -26,6 +27,15 @@ public:
         Serial.println("delay spark: " + String(_delaySpark));
     }
 
+    void setSparkTime(int time)
+    {
+        _sparkTime = time;
+    }
+    void setInjectionTime(int time)
+    {
+        _injectionTime = time;
+    }
+
 private:
     void _injection(); // впрыск
     void _spark();     // искра
@@ -42,6 +52,10 @@ private:
 
     int _pinWorkInjection, _pinWorkSpark;
 
-    Converter converter;
+    Converter _converter;
+    InjectionController *_injectionController;
+    SparkController *_sparkController;
+    int _injectionTime = 100;
+    int _sparkTime = 200;
 };
 #endif

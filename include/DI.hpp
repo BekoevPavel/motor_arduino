@@ -3,6 +3,8 @@
 #include "encoder.hpp"
 #include "MotorController.hpp"
 #include "connect.hpp"
+#include "stepper.hpp"
+#include " dynamometer.hpp"
 class DI
 {
 private:
@@ -19,8 +21,10 @@ public:
 
     static MotorController *motorController;
     static Encoder *enc;
-    static ConnectController * uiProg;
+    static ConnectController *uiProg;
+    static MyStepper *stepper;
+    static Dynamometer *dynamometer;
+    
 };
 
 #endif
-

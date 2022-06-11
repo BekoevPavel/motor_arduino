@@ -23,6 +23,11 @@ public:
         return result;
     }
 
+    uint16_t toInt16(uint8_t * input)
+    {
+        return 0;
+    }
+
 private:
     uint8_t *_toByte_Array(uint16_t input)
 

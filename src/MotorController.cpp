@@ -1,6 +1,9 @@
 #include "MotorController.hpp"
 #include "DI.hpp"
+#define L_PIN 9
 
+#define i_PIN 8
+#define k_pin 7
 MotorController::MotorController(Encoder *enc, int pinInjection, int pinSpark)
 {
     _enc = enc;
@@ -9,6 +12,8 @@ MotorController::MotorController(Encoder *enc, int pinInjection, int pinSpark)
     _timePinSpark = pinSpark;
     pinMode(_pinWorkInjection, OUTPUT);
     pinMode(_pinWorkSpark, OUTPUT);
+    _injectionController = new InjectionController(L_PIN);
+    _sparkController = new SparkController(i_PIN, k_pin);
 }
 void MotorController::_injection()
 {
@@ -22,7 +27,11 @@ void MotorController::_injection()
     {
         _startInjection = false;
         Serial.println("Впрыск"); // сделать впрыск
+
+        // TODO Сделать прием задержки из UI
+        _injectionController->startInjection(_injectionTime);
     }
+    _injectionController->tick();
 }
 void MotorController::_spark()
 {
@@ -36,22 +45,24 @@ void MotorController::_spark()
     {
         _startSpark = false;
         Serial.println("Искра");
+        _sparkController->startSpark(_sparkTime);
 
         // сделать впрыск
     }
+    _sparkController->tick();
 }
 unsigned long int timeOut1 = 0;
 
 void MotorController::tick()
 {
     _injection();
-    //_spark();
+    _spark();
     uint16_t delay = _enc->deltaTime();
     // Serial.println("delta: "+String(delay));
 
     if (millis() - timeOut1 > 600)
     {
-        auto res = converter.toUInt8_Array(delay);
+        auto res = _converter.toUInt8_Array(delay);
 
         DI::uiProg->send(res, 3);
 

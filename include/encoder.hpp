@@ -23,6 +23,8 @@ public:
     uint16_t deltaTime()
     {
 
+        // Serial.println("pin0: " + String(digitalRead(_pin0)) + " pin1: " + String(digitalRead(_pin1)) + " pin2: " + String(digitalRead(_pin2)) + " pin3: " + String(digitalRead(_pin3)));
+
         int activatedSensor = _activatedSensor();
 
         if (activatedSensor != -1)
@@ -31,7 +33,7 @@ public:
             {
 
                 _deltaTime = millis() - _timeLastPin;
-                //Serial.println("delta: " + String(_deltaTime));
+                // Serial.println("delta: " + String(_deltaTime));
                 _timeLastPin = millis();
 
                 _lastActivatedSensor = activatedSensor;
@@ -53,6 +55,7 @@ public:
     {
         if (millis() - _timeActiveSpark >= DELAY && !digitalRead(_pin1))
         {
+
             _timeActiveSpark = millis();
             return true;
         }
