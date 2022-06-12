@@ -62,7 +62,7 @@ void MotorController::tick()
 
     if (millis() - timeOut1 > 600)
     {
-        auto res = _converter.toUInt8_Array(delay);
+        auto res = _converter.intToBytes(delay);
 
         DI::uiProg->send(res, 3);
 

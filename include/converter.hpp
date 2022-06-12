@@ -7,98 +7,24 @@
 class Converter
 {
 public:
-    Converter()
-    {
-    }
+    Converter(){};
 
     // func
 public:
-    uint8_t *toUInt8_Array(uint16_t input)
+    uint8_t *intToBytes(uint16_t input)
     {
+        uint8_t first = (uint8_t)(input / 256);
+        uint8_t last = input - first * 256;
 
-        uint8_t *bytesArray = _toByte_Array(input);
-
-        uint8_t *result = _byteToUnt_array(bytesArray);
+        static uint8_t result[2] = {first, last};
 
         return result;
     }
-
-    uint16_t toInt16(uint8_t * input)
+    uint16_t byteToInt(uint8_t firstByte, uint8_t lastByte)
     {
-        return 0;
+        return lastByte + (firstByte * 256);
     }
 
 private:
-    uint8_t *_toByte_Array(uint16_t input)
-
-    {
-        uint16_t temp = input;
-        static uint8_t result[16] = {};
-        static uint8_t tempArray[16] = {};
-        for (int i = 0; i < 16; i++)
-        {
-
-            tempArray[i] = temp % 2;
-            temp /= 2;
-        }
-        for (int i = 15; i > 0; i--)
-        {
-            result[i] = tempArray[15 - i];
-        }
-        if (input > 32767)
-        {
-            result[0] = 1;
-        }
-
-        return result;
-    }
-
-    uint8_t *_byteToUnt_array(uint8_t *bytes)
-    {
-        uint8_t firstArray[8] = {};
-        uint8_t lastArray[8] = {};
-        for (int i = 0; i < 8; i++)
-        {
-
-            firstArray[i] = bytes[i];
-        }
-        for (int i = 0; i < 8; i++)
-        {
-            lastArray[i] = bytes[i + 8];
-        }
-        // Serial.println("");
-        //  first cut print
-        for (int i = 0; i < 8; i++)
-        {
-            // Serial.print(String(firstArray[i]) + ".");
-        }
-        // Serial.println("");
-        //  last cut print
-        for (int i = 0; i < 8; i++)
-        {
-            // Serial.print(String(lastArray[i]) + ".");
-        }
-        //--------------------------------------
-        uint8_t resultFirst = 0;
-        uint8_t resultLast = 0;
-        for (int i = 7; i >= 0; i--)
-        {
-            auto res = lastArray[abs(i - 7)] * pow(2, i);
-
-            resultLast = resultLast + res;
-        }
-        for (int i = 7; i >= 0; i--)
-        {
-            auto res = firstArray[abs(i - 7)] * pow(2, i);
-            resultFirst = resultFirst + res;
-        }
-
-        uint8_t *result = new uint8_t[3];
-        result[0] = 228;
-        result[1] = resultFirst;
-        result[2] = resultLast;
-
-        return result;
-    }
 };
 #endif
