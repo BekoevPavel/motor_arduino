@@ -22,11 +22,13 @@ public:
 public:
     unsigned long int deltaTime()
     {
+
         if (digitalRead(_pin0) == 0 || digitalRead(_pin1) == 0 || digitalRead(_pin2) == 0 || digitalRead(_pin3) == 0)
         {
 
             _deltaTime = millis() - _timeLastPin;
             _timeLastPin = millis();
+            Serial.println("click" + String(millis()) + " - " + String(_deltaTime));
         }
         return _deltaTime;
     }
@@ -55,5 +57,6 @@ private:
     unsigned long int _timeActiveInvection = 0;
     unsigned long int _timeActiveSpark = 0;
     unsigned long int _deltaTime = 0;
+    bool _detectPin = false;
 };
 #endif

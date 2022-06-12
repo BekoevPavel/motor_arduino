@@ -15,24 +15,27 @@ void initDI()
   auto &di1 = DI::getInstance();
   di = &di1;
 
-  di->enc = new Encoder(1, 2, 3, 4);
+  di->enc = new Encoder(4, 5, 6, 7);
   di->motorController = new MotorController(di->enc);
   di->uiProg = new ConnectController();
+
+  pinMode(2, INPUT_PULLUP);
 }
 
 void setup()
 {
   Serial.begin(9600);
   initDI();
+  //pinMode(6,INPUT_PULLUP);
 
-  DDRK = 0x00;
-  PORTK = B11111111;
-  DDRF = 0x00;
+  // DDRK = 0x00;
+  // PORTK = B11111111;
+  // DDRF = 0x00;
 
-  PORTF = B11111111;
+  // PORTF = B11111111;
 
-  DDRC = B11111111;
-  PORTC = B11111111;
+  // DDRC = B11111111;
+  // PORTC = B11111111;
 
   unsigned long int ff = 547655 * 0.0001;
   uint8_t ff1 = ff;
@@ -41,21 +44,24 @@ void setup()
 
 void loop()
 {
-  if (millis() - timeOut > 10)
-  {
+  di->motorController->tick();
 
-    if (oldValueK != PINK || oldValueF != PINF)
-    {
 
-      oldValueK = PINK;
-      oldValueF = PINF;
+  // if (millis() - timeOut > 10)
+  // {
 
-      uint8_t data[2] = {oldValueF, oldValueK};
-      di->uiProg->send(data);
-    }
+  //   if (oldValueK != PINK || oldValueF != PINF)
+  //   {
 
-    timeOut = millis();
-  }
+  //     oldValueK = PINK;
+  //     oldValueF = PINF;
 
-  di->uiProg->listen();
+  //     uint8_t data[2] = {oldValueF, oldValueK};
+  //     di->uiProg->send(data);
+  //   }
+
+  //   timeOut = millis();
+  // }
+
+  //di->uiProg->listen();
 }

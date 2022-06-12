@@ -34,7 +34,9 @@ void MotorController::_spark()
 
 void MotorController::tick()
 {
-    _injection();
-    _spark();
-    uint8_t delay = di->enc->deltaTime();
+    //_injection();
+    //_spark();
+    //uint8_t delay =
+     _enc->deltaTime();
+    //Serial.println("delay: "+String(delay));
 }
