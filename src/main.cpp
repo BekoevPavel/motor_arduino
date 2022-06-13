@@ -18,13 +18,13 @@ unsigned long int timeOut = 0;
 void initDI()
 {
   // 1(3) - искра , 3(5) - Впрыск
-  DI::enc = new Encoder(17, 18, 19, 20);
+  DI::enc = new Encoder(17, 18,20);
   DI::motorController = new MotorController(DI::enc, 22, 23);
   DI::uiProg = new ConnectController();
   DI::stepper = new MyStepper(EN, PUL, DIR);
   DI::dynamometer = new Dynamometer(DYNAMOMETR_PIN);
 }
-
+InjectionController *injectionController = new InjectionController(9);
 void setup()
 {
   Serial.begin(9600);
@@ -49,9 +49,8 @@ void setup()
 
 void loop()
 {
-  
 
-   DI::motorController->tick();
+  DI::motorController->tick();
 
   //  if (millis() - timeOut > 10)
   //  {
@@ -68,6 +67,8 @@ void loop()
 
   //   timeOut = millis();
   // }
+  DI::dynamometer->tick();
 
-   DI::uiProg->listen();
+  DI::uiProg->listen();
+  DI::stepper->tick();
 }

@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#define STEPS_ON_TURN 800
+#define STEPS_ON_TURN 2400
 class SparkController
 {
 public:
@@ -37,6 +37,8 @@ public:
             Serial.println("Конец искры");
         }
     }
+
+    
 
 private:
     int _delay = 0;

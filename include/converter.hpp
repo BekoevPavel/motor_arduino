@@ -16,7 +16,13 @@ public:
         uint8_t first = (uint8_t)(input / 256);
         uint8_t last = input - first * 256;
 
-        static uint8_t result[2] = {first, last};
+        uint8_t * result = new  uint8_t[2];
+
+        result[0] = first;
+        result[1] = last;
+        // Serial.println("v - "+String(input));
+        // Serial.println("v0 - "+String(result[0]));
+        // Serial.println("v1 - "+String(result[1]));
 
         return result;
     }

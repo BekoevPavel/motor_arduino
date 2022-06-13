@@ -21,16 +21,19 @@ ConnectController::ConnectController()
     }
 }
 
-void ConnectController::send(uint8_t *data, int _lenght)
+void ConnectController::send(uint8_t sendID, uint8_t *data, int _lenght)
 {
-    int lenght = _lenght;
-    // Serial.println("");
-    // for (int i = 0; i < _lenght; i++)
-    // {
-    //     Serial.print(String(data[i]) + ".");
-    // }
-    // Serial.println("");
-    client.write(data, lenght);
+
+    // функция отправки по ID
+    uint8_t *sendArray = new uint8_t[_lenght];
+    sendArray[0] = sendID;
+    for (int i = 0; i < _lenght; i++)
+    {
+
+        sendArray[i + 1] = data[i];
+    }
+
+    client.write(sendArray, _lenght);
 }
 
 void ConnectController::tick()
@@ -58,13 +61,35 @@ uint8_t *ConnectController::listen()
         {
             Serial.println("click2");
         }
-        if (mass[0] == (uint8_t)1) // Прослушка значения для Injection (Впрыск)
+        if (mass[0] == (uint8_t)15) // Прослушка значения для Injection (Впрыск)
         {
-            DI::motorController->setDelayInjectoin(mass[1]);
+            uint16_t sparkDelay = _converter.byteToInt(mass[1], mass[2]);
+            DI::motorController->setDelayInjectoin(sparkDelay);
+            Serial.println("value Y: " + String(sparkDelay));
+            Serial.println("впрыск");
         }
-        if (mass[0] == (uint8_t)2)  // Прослушка значения для Spark (Искра)
+        if (mass[0] == (uint8_t)13) // Прослушка значения для Spark (Искра)
         {
-            DI::motorController->setDelaySpark(mass[1]);
+            uint16_t sparkDelay = _converter.byteToInt(mass[1], mass[2]);
+            DI::motorController->setDelaySpark(sparkDelay);
+            Serial.println("value Y: " + String(sparkDelay));
+            Serial.println("зажигание");
+        }
+       
+        if (mass[0] == (uint8_t)11)
+        {
+
+            DI::stepper->setTarget(_converter.byteToInt(mass[1], mass[2]));
+            Serial.println();
+            Serial.println("мотор");
+            // Задать напряжения потенциометра для остановки для мотора
+        }
+        if (mass[0] == (uint8_t)14)
+        {
+            uint16_t sparkDelay = _converter.byteToInt(mass[1], mass[2]);
+            DI::motorController->setDelaySpark(sparkDelay);
+            Serial.println("авто-value Y: " + String(sparkDelay));
+            Serial.println("авто-зажигание");
         }
 
         Serial.println("");

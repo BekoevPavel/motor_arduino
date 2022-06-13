@@ -21,23 +21,46 @@ public:
 public:
     void move(int speed)
     {
-        _stepper->brake();
-        _stepper->setRunMode(KEEP_SPEED);
-        _stepper->setSpeed(speed);
+        if(_speed != speed)
+        {
+            _started = false;
+        }
+        if (!_started)
+        {
+            _stepper->brake();
+            _stepper->setRunMode(KEEP_SPEED);
+            _stepper->setAcceleration(0);
+            _stepper->setSpeed(speed);
+            _started = true;
+        }
+        _speed = speed;
     }
     void stop()
     {
+        _started = false;
         _stepper->brake();
     }
-    void tick()
+    void tick();
+    
+
+    void setTarget(uint8_t target)
     {
-        _stepper->tick();
+        _target = target;
     }
 
+    uint8_t getTarget()
+    {
+        return _target;
+    }
+
+
 private:
+    bool _started = false;
     int _en = 0;
     int _pul = 0;
     int _dir = 0;
+    int _target = 0;
+    int _speed = 0;
 
     GStepper<STEPPER2WIRE> *_stepper;
 };

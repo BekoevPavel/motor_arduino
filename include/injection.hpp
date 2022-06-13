@@ -21,8 +21,8 @@ public:
             _delay = delay;
             _canTick = true;
             digitalWrite(_pin, HIGH);
+            Serial.println("Начало впрыска");
         }
-      
     }
     void tick()
     {
@@ -33,6 +33,15 @@ public:
             _startTime = 0;
             Serial.println("Конец впрыска");
         }
+    }
+
+    void onSpark()
+    {
+        digitalWrite(_pin, HIGH);
+    }
+    void offSpark()
+    {
+        digitalWrite(_pin, LOW);
     }
 
 private:

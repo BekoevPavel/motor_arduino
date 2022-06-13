@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <Ethernet2.h>
 #include <SPI.h>
+#include "converter.hpp"
 
 class ConnectController
 {
@@ -12,7 +13,7 @@ public:
 
     // func
 public:
-    void send(uint8_t *data, int _lenght);
+    void send(uint8_t sendID, uint8_t *data, int _lenght);
 
     uint8_t *listen();
 
@@ -23,6 +24,8 @@ private:
     byte server[4] = {192, 168, 0, 2}; // Touchberry Pi Server
     int tcp_port = 2400;
     EthernetClient client;
+
+    Converter _converter;
 
 
 };

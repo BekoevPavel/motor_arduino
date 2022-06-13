@@ -57,14 +57,13 @@ void MotorController::tick()
 {
     _injection();
     _spark();
-    uint16_t delay = _enc->deltaTime();
-    // Serial.println("delta: "+String(delay));
+    uint16_t delay = _enc->getDelay();
 
     if (millis() - timeOut1 > 600)
     {
         auto res = _converter.intToBytes(delay);
 
-        DI::uiProg->send(res, 3);
+        DI::uiProg->send(228, res, 3);
 
         timeOut1 = millis();
     }
