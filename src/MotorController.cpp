@@ -1,9 +1,11 @@
 #include "MotorController.hpp"
 #include "DI.hpp"
+
 MotorController::MotorController(Encoder *enc)
 {
     _enc = enc;
-    di->getInstance();
+
+    //_di = &di1;
 }
 void MotorController::_injection()
 {
@@ -31,12 +33,35 @@ void MotorController::_spark()
         // сделать впрыск
     }
 }
+unsigned long int timeOut1 = 0;
 
 void MotorController::tick()
 {
+<<<<<<< HEAD
     //_injection();
     //_spark();
     //uint8_t delay =
      _enc->deltaTime();
     //Serial.println("delay: "+String(delay));
+=======
+    _injection();
+    _spark();
+    uint16_t delay = _enc->deltaTime();
+    // Serial.println("delta: "+String(delay));
+    auto res = converter.toUInt8_Array(delay);
+    if (millis() - timeOut1 > 600)
+    {
+        Serial.println("delta: " + String(delay));
+        for(int i = 0 ; i < 3; i ++)
+        {
+            Serial.print(String(res[i])+".");
+        }
+        Serial.println("");
+        //DI::uiProg->send(res, 3);
+
+        timeOut1 = millis();
+    }
+
+    // Serial.println("res: "+String(delay));
+>>>>>>> dccebb2c60249601675fea6e91a536e405ed23f3
 }

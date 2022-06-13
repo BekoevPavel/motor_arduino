@@ -1,28 +1,35 @@
 #include "connect.hpp"
-#include "DI.hpp"
+#include <DI.hpp>
+
 ConnectController::ConnectController()
 {
     Ethernet.begin(mac, ip);
-    di->getInstance();
 
     delay(1000);
+    Serial.println("ip: " + String(Ethernet.localIP()));
 
     Serial.println("Connecting...");
 
     if (client.connect(server, tcp_port))
     { // Connection to server.js
-        Serial.println("Connected to server.js");
+        Serial.println("Connected to UI");
         client.println();
     }
     else
     {
-        Serial.println("connection failed");
+        Serial.println("Connection failed");
     }
 }
 
-void ConnectController::send(uint8_t *data)
+void ConnectController::send(uint8_t *data, int _lenght)
 {
-    int lenght = sizeof(data) / sizeof(uint8_t);
+    int lenght = _lenght;
+    Serial.println("");
+    for (int i = 0; i < _lenght; i++)
+    {
+        Serial.print(String(data[i]) + ".");
+    }
+    Serial.println("");
     client.write(data, lenght);
 }
 
@@ -31,7 +38,7 @@ void ConnectController::tick()
     if (!client.connected())
     {
         Serial.println();
-        Serial.println("disconnecting.");
+        Serial.println("Disconnecting.");
         client.stop();
         for (;;)
             ;
@@ -46,19 +53,18 @@ uint8_t *ConnectController::listen()
         uint8_t mass[] = {0, 0, 0};
         int lenght = sizeof(mass) / sizeof(uint8_t);
         client.read(mass, lenght);
-      
-       
+
         if (mass[0] == (uint8_t)3)
         {
-            Serial.println("click");
+            Serial.println("click2");
         }
         if (mass[0] == (uint8_t)1)
         {
-            di->motorController->setDelayInjectoin(mass[1]);
+            DI::motorController->setDelayInjectoin(mass[1]);
         }
-        if(mass[0] == (uint8_t)2)
+        if (mass[0] == (uint8_t)2)
         {
-            di->motorController->setDelaySpark(mass[1]);
+            DI::motorController->setDelaySpark(mass[1]);
         }
         Serial.println("");
     }

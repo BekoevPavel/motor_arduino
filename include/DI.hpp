@@ -7,19 +7,20 @@ class DI
 {
 private:
     DI() {}
-    DI(const DI &);
-    DI &operator=(DI &);
+    // DI(const DI &);
+    // DI &operator=(DI &);
 
 public:
-    static DI &getInstance()
-    {
-        static DI instance;
-        return instance;
-    }
+    // static DI &getInstance()
+    // {
+    //     static DI instance;
+    //     return instance;
+    // }
 
-    MotorController *motorController;
-    Encoder *enc;
-    ConnectController * uiProg;
+    static MotorController *motorController;
+    static Encoder *enc;
+    static ConnectController * uiProg;
 };
 
 #endif
+
