@@ -15,10 +15,10 @@ public:
 public:
     void tick();
 
-    void setDelayInjectoin(unsigned long int delay)
+    void setDelayInjectoin()
     {
 
-        _delayInjection = delay;
+        //_delayInjection = delay;
         Serial.println("delay injection: " + String(_delayInjection));
     }
     void setDelaySpark(unsigned long int delay)
@@ -33,6 +33,7 @@ public:
     }
     void setInjectionTime(int time)
     {
+        Serial.println("Задержка зажигания" + String(time));
         _injectionTime = time;
     }
 

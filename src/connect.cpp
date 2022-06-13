@@ -63,9 +63,11 @@ uint8_t *ConnectController::listen()
         }
         if (mass[0] == (uint8_t)15) // Прослушка значения для Injection (Впрыск)
         {
-            uint16_t sparkDelay = _converter.byteToInt(mass[1], mass[2]);
-            DI::motorController->setDelayInjectoin(sparkDelay);
-            Serial.println("value Y: " + String(sparkDelay));
+            uint16_t injectionTime = _converter.byteToInt(mass[1], mass[2]);
+            // DI::motorController->setDelayInjectoin();
+            DI::motorController->setInjectionTime(injectionTime);
+
+            Serial.println("время впрыска: " + String(injectionTime));
             Serial.println("впрыск");
         }
         if (mass[0] == (uint8_t)13) // Прослушка значения для Spark (Искра)
@@ -75,7 +77,7 @@ uint8_t *ConnectController::listen()
             Serial.println("value Y: " + String(sparkDelay));
             Serial.println("зажигание");
         }
-       
+
         if (mass[0] == (uint8_t)11)
         {
 
@@ -90,6 +92,17 @@ uint8_t *ConnectController::listen()
             DI::motorController->setDelaySpark(sparkDelay);
             Serial.println("авто-value Y: " + String(sparkDelay));
             Serial.println("авто-зажигание");
+        }
+
+        // if (mass[0] == (uint8_t)16 && mass[1] == (uint8_t)16)
+        // {
+        //     DI::stepper->stop();
+        //     Serial.println("Stop motor");
+        // }
+
+        if (mass[0] == (uint8_t)17)
+        {
+            DI::motorController->setInjectionTime(mass[1]);
         }
 
         Serial.println("");

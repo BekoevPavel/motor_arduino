@@ -3,7 +3,7 @@
 unsigned long int timeOut5 = 0;
 bool _renge(uint8_t val1, uint8_t val2)
 {
-    if (abs(val1 - val2) < 16)
+    if (abs(val1 - val2) < 3)
     {
         return true;
     }

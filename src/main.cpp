@@ -8,6 +8,7 @@
 #define PUL 11
 
 #define DYNAMOMETR_PIN A0
+#define STOP_STEPPER_PIN 19
 // old values
 // byte oldValueK = PINK;
 // byte oldValueF = PINF;
@@ -18,11 +19,11 @@ unsigned long int timeOut = 0;
 void initDI()
 {
   // 1(3) - искра , 3(5) - Впрыск
-  DI::enc = new Encoder(17, 18,20);
+  DI::enc = new Encoder(17, 18, 20);
   DI::motorController = new MotorController(DI::enc, 22, 23);
   DI::uiProg = new ConnectController();
   DI::stepper = new MyStepper(EN, PUL, DIR);
-  DI::dynamometer = new Dynamometer(DYNAMOMETR_PIN);
+  DI::dynamometer = new Dynamometer(DYNAMOMETR_PIN, STOP_STEPPER_PIN);
 }
 InjectionController *injectionController = new InjectionController(9);
 void setup()
@@ -40,11 +41,11 @@ void setup()
   // DDRC = B11111111;
   // PORTC = B11111111;
 
-  DI::motorController->setDelayInjectoin(2000);
+  // DI::motorController->setDelayInjectoin(2000);
   DI::motorController->setDelaySpark(2000);
 
   DI::motorController->setInjectionTime(1000);
-  DI::motorController->setSparkTime(2000);
+  DI::motorController->setSparkTime(5);
 }
 
 void loop()

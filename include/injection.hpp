@@ -17,7 +17,7 @@ public:
     {
         if (_canTick == false)
         {
-            _startTime = millis();
+            _startTime = micros();
             _delay = delay;
             _canTick = true;
             digitalWrite(_pin, HIGH);
@@ -26,7 +26,7 @@ public:
     }
     void tick()
     {
-        if (_canTick == true && millis() - _startTime >= _delay)
+        if (_canTick == true && micros() - _startTime >= _delay)
         {
             digitalWrite(_pin, LOW);
             _canTick = false;

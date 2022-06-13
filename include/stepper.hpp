@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <GyverStepper.h>
+
 #define STEPS_ON_TURN 800
 class MyStepper
 {
@@ -21,7 +22,7 @@ public:
 public:
     void move(int speed)
     {
-        if(_speed != speed)
+        if (_speed != speed)
         {
             _started = false;
         }
@@ -38,10 +39,11 @@ public:
     void stop()
     {
         _started = false;
+        // _target = 0;
+
         _stepper->brake();
     }
     void tick();
-    
 
     void setTarget(uint8_t target)
     {
@@ -52,7 +54,6 @@ public:
     {
         return _target;
     }
-
 
 private:
     bool _started = false;

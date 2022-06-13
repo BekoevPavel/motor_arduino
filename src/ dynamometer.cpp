@@ -2,6 +2,7 @@
 #include "DI.hpp"
 void Dynamometer::tick()
 {
+
     U = _getU();
     if (millis() - _timeOut > 300)
     {
@@ -13,6 +14,20 @@ void Dynamometer::tick()
 
         _timeOut = millis();
     }
+    findStopMoment();
 
     _getU();
+}
+
+void Dynamometer::findStopMoment()
+{
+    // if (digitalRead(_pinStop))
+    // {
+    //     stoped = false;
+    // }
+    // if (!digitalRead(_pinStop) && !stoped)
+    // {
+    //     DI::stepper->stop();
+    //     stoped = true;
+    // }
 }

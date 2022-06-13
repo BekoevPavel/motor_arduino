@@ -25,7 +25,7 @@ public:
         {
             _deltaTime = 65000;
         }
-        // Serial.println("pin0: " + String(digitalRead(_pin0)) + " pin1: " + String(digitalRead(_pin1)) + " pin2: " + String(digitalRead(_pin2)));
+        //Serial.println("pin0: " + String(digitalRead(_pin0)) + " pin1: " + String(digitalRead(_pin1)) + " pin2: " + String(digitalRead(_pin2)));
         if (!digitalRead(_pin0))
         {
             lastTime = millis();
@@ -40,20 +40,29 @@ public:
     }
     bool injectionPin()
     {
-        if (millis() - _timeActiveInvection >= DELAY && !digitalRead(_pin2))
+        if (millis() - _timeActiveInvection >= DELAY && !digitalRead(_pin2) && !_injectionPinActive)
         {
+            _injectionPinActive = true;
             _timeActiveInvection = millis();
             return true;
+        }
+        if(digitalRead(_pin2))
+        {
+            _injectionPinActive = false;
         }
         return false;
     }
     bool sparkPin()
     {
-        if (millis() - _timeActiveSpark >= DELAY && !digitalRead(_pin1))
+        if (millis() - _timeActiveSpark >= DELAY && !digitalRead(_pin1) && !_sparkPinActive)
         {
-
+            _sparkPinActive = true;
             _timeActiveSpark = millis();
             return true;
+        }
+        if(digitalRead(_pin1))
+        {
+            _sparkPinActive = false;
         }
         return false;
     }
@@ -67,5 +76,8 @@ private:
     unsigned long int _timeActiveInvection = 0;
     unsigned long int _timeActiveSpark = 0;
     unsigned long int _deltaTime = 0;
+
+    bool _injectionPinActive = false;
+    bool _sparkPinActive = false;
 };
 #endif
