@@ -44,7 +44,7 @@ void setup()
   // DI::motorController->setDelayInjectoin(2000);
   DI::motorController->setDelaySpark(2000);
 
-  DI::motorController->setInjectionTime(1000);
+  DI::motorController->setInjectionTime(10000);
   DI::motorController->setSparkTime(5);
 }
 
