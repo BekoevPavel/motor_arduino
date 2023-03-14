@@ -35,6 +35,7 @@ public:
     {
         Serial.println("Задержка зажигания" + String(time));
         _injectionTime = time;
+        _injectionController->setInjectionTime(time);
     }
 
 private:

@@ -29,7 +29,7 @@ void MotorController::_injection()
         Serial.println("Впрыск"); // сделать впрыск
 
         // TODO Сделать прием задержки из UI
-        _injectionController->startInjection(_injectionTime);
+        _injectionController->startInjection();
     }
     _injectionController->tick();
 }

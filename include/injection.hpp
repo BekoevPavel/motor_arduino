@@ -13,12 +13,12 @@ public:
         pinMode(_pin, OUTPUT);
         digitalWrite(_pin, LOW);
     }
-    void startInjection(int delay)
+    void startInjection()
     {
         if (_canTick == false)
         {
             _startTime = micros();
-            _delay = delay;
+            ;
             _canTick = true;
             digitalWrite(_pin, HIGH);
             Serial.println("Начало впрыска");
@@ -32,7 +32,13 @@ public:
             _canTick = false;
             _startTime = 0;
             Serial.println("Конец впрыска");
+            Serial.println("Конец искры "+String(_delay));
         }
+  
+    }
+    void setInjectionTime(u16 delay)
+    {
+        _delay = delay;
     }
 
     void onSpark()

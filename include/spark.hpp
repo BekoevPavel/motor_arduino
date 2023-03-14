@@ -34,7 +34,8 @@ public:
             digitalWrite(_pin2, LOW);
             _canTick = false;
             _startTime = 0;
-            Serial.println("Конец искры");
+
+            Serial.println("Конец искры "+String(_delay));
         }
     }
 

@@ -3,7 +3,7 @@
 unsigned long int timeOut5 = 0;
 bool _renge(uint8_t val1, uint8_t val2)
 {
-    if (abs(val1 - val2) < 3)
+    if (abs(val1 - val2) < 7)
     {
         return true;
     }
@@ -20,13 +20,13 @@ void MyStepper::tick()
 
     if (_renge(DI::dynamometer->U, _target))
     {
-        //Serial.println("stop");
+       // Serial.println("stop");
         stop();
     }
     else if (DI::dynamometer->U > _target)
     {
 
-        //Serial.println("left");
+        
         move(STEPS_ON_TURN);
     }
     else if (DI::dynamometer->U < _target)

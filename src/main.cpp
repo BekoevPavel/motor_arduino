@@ -44,7 +44,7 @@ void setup()
   // DI::motorController->setDelayInjectoin(2000);
   DI::motorController->setDelaySpark(2000);
 
-  DI::motorController->setInjectionTime(1000);
+  DI::motorController->setInjectionTime(100);
   DI::motorController->setSparkTime(5);
 }
 
@@ -52,6 +52,8 @@ void loop()
 {
 
   DI::motorController->tick();
+
+ 
 
   //  if (millis() - timeOut > 10)
   //  {

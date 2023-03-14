@@ -65,9 +65,9 @@ uint8_t *ConnectController::listen()
         {
             uint16_t injectionTime = _converter.byteToInt(mass[1], mass[2]);
             // DI::motorController->setDelayInjectoin();
-            DI::motorController->setInjectionTime(injectionTime);
+            DI::motorController->setInjectionTime(injectionTime*100);
 
-            Serial.println("время впрыска: " + String(injectionTime));
+            Serial.println("время впрыска: " + String(injectionTime*100));
             Serial.println("впрыск");
         }
         if (mass[0] == (uint8_t)13) // Прослушка значения для Spark (Искра)

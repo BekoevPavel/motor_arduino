@@ -24,6 +24,7 @@ public:
     {
         if (_speed != speed)
         {
+            Serial.println("start");
             _started = false;
         }
         if (!_started)
